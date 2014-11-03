@@ -1,20 +1,7 @@
-import matplotlib
-matplotlib.use('Agg')
-
-import matplotlib.pyplot as plt
-
-import numpy
-import numpy.linalg
-
 from PIL import Image, ImageDraw
-
-from scipy.cluster.vq import kmeans, vq, whiten
-from numpy import array, random
-
-from const import TOWERS, COLORS
-
+from numpy import array, random, vstack, ones, linalg
+from const import TOWERS
 from copy import deepcopy
-
 from os import path
 
 class MapDrawer:
@@ -58,10 +45,14 @@ class MapDrawer:
         y_map = [v["y"] for v in vals if "worldY" in v]
 
         # calculating scale and offset to convert worldcoordinates to coordinates on the map 
-        Ax = numpy.vstack((x, numpy.ones(len(x)))).T
-        Ay = numpy.vstack((y, numpy.ones(len(y)))).T
-        self.scale_x, self.offset_x = numpy.linalg.lstsq(Ax, x_map)[0]
-        self.scale_y, self.offset_y = numpy.linalg.lstsq(Ay, y_map)[0]
+        Ax = vstack((x, ones(len(x)))).T
+        Ay = vstack((y, ones(len(y)))).T
+        self.scale_x, self.offset_x = linalg.lstsq(Ax, x_map)[0]
+        self.scale_y, self.offset_y = linalg.lstsq(Ay, y_map)[0]
+
+        # import matplotlib
+        # matplotlib.use('Agg')
+        # import matplotlib.pyplot as plt
 
         # x_tomap = [(a * self.scale_x) + self.offset_x for a in x]
         # y_tomap = [(a * self.scale_y) + self.offset_y for a in y]

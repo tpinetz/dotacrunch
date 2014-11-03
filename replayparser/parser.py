@@ -3,11 +3,9 @@ import io
 from smoke.io.wrap import demo as io_wrp_dm
 from smoke.replay import demo as rply_dm
 
-from const import HEROES, COLORS
+from const import HEROES
 
 from mapdrawer import MapDrawer
-
-import time
 
 from copy import deepcopy
 
