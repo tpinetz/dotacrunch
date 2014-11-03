@@ -11,6 +11,10 @@ Before you can install the necessary libraries via pip it might be possible that
 
 `$ pip install -r requirements.txt`
 
+If you want to execute the examples too, you have to install some additional dependencies
+
+`$ pip install -r examples-requirements.txt`
+
 You also need to install smoke which is currently not on pip, just follow the instructions on their github page: [smoke](https://github.com/skadistats/smoke)
 
 Installation
@@ -21,7 +25,7 @@ To install, simply type
 
 Usage
 -----
-You can find example usage for the API in the examples folder. You have to install the library beforehand. Execute all of them or a specific one with the following commands:
+You can find example usage for the API in the examples folder. You have to install the library as well as the requirements in examples-requirements.txt beforehand. Execute all of them or a specific one with the following commands:
 
 `$ python -m examples`
 

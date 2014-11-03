@@ -86,7 +86,7 @@ class ReplayParser():
             if timedelta is 0:
                 timedelta = time
             time = time - timedelta
-            minutes = round((time / 60) * 10) / 10       
+            minutes = round((time / 60) * 10) / 10.0     
 
             if time < i * interval:
                 continue
@@ -96,7 +96,7 @@ class ReplayParser():
             tick_data = {
                 "heroes" : {}
             }
-            tick_data["time"] = time
+            tick_data["time"] = round(time)
 
             # heroes
             hero_list = self.get_hero_info_for_tick(tick.entities)
@@ -115,7 +115,21 @@ class ReplayParser():
                 worldX = hero_data.get(position_x_index) + hero_data.get(position_vector_index)[0]/128.
                 worldY = hero_data.get(position_y_index) + hero_data.get(position_vector_index)[0]/128.
 
-                tick_data["heroes"][name] = dict(hero.items() + {"worldX" : worldX, "worldY" : worldY}.items())
+                if minutes >= 1:
+                    gpm = hero["gold"] / minutes
+                    xpm = hero["xp"] / minutes
+                else:
+                    gpm = hero["gold"] * 1.0
+                    xpm = hero["xp"] * 1.0
+
+                additional_data = {
+                    "worldX" : worldX,
+                    "worldY" : worldY,
+                    "gpm" : gpm,
+                    "xpm" : xpm,
+                }
+
+                tick_data["heroes"][name] = dict(hero.items() + additional_data.items())
 
             yield tick_data
 

@@ -1,6 +1,4 @@
-# adding plugin to path
 from dotacrunch import parser
-from os import path
 
 def main():
 	demofile = "examples/replays/1000394049.dem"

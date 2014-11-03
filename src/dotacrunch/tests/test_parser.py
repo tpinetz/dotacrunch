@@ -12,7 +12,7 @@ class ReplayParserTestCase(unittest.TestCase):
 	def test_read_replay_data_heroes_first_tick(self):
 		"""
 			tick_data contains heroes in right format
-			herodata contains name, x, y and they have the right type
+			herodata contains all attributes with the right type, as well as 10 sets of data
 		"""
 
 		replay_parser = ReplayParser(self.testfile)
@@ -33,6 +33,27 @@ class ReplayParserTestCase(unittest.TestCase):
 
 				self.assertTrue("worldY" in data)
 				self.assertIsInstance(data["worldY"], float)
+
+				self.assertTrue("gpm" in data)
+				self.assertIsInstance(data["gpm"], float)
+
+				self.assertTrue("xpm" in data)
+				self.assertIsInstance(data["xpm"], float)
+
+				self.assertTrue("gold" in data)
+				self.assertIsInstance(data["gold"], int)
+
+				self.assertTrue("xp" in data)
+				self.assertIsInstance(data["xp"], int)
+
+				self.assertTrue("kills" in data)
+				self.assertIsInstance(data["kills"], int)
+
+				self.assertTrue("deaths" in data)
+				self.assertIsInstance(data["deaths"], int)
+
+				self.assertTrue("assists" in data)
+				self.assertIsInstance(data["assists"], int)
 
 			break
 
