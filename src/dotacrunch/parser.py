@@ -115,12 +115,7 @@ class ReplayParser():
                 worldX = hero_data.get(position_x_index) + hero_data.get(position_vector_index)[0]/128.
                 worldY = hero_data.get(position_y_index) + hero_data.get(position_vector_index)[0]/128.
 
-                tick_data["heroes"][name] = {
-                    "name" : name,
-                    "worldX" : worldX,
-                    "worldY" : worldY,
-                    "hero_id" : hero["hero_id"]
-                }
+                tick_data["heroes"][name] = dict(hero.items() + {"worldX" : worldX, "worldY" : worldY}.items())
 
             yield tick_data
 
@@ -141,6 +136,24 @@ class ReplayParser():
             hero_id_index = rt.by_name['m_nSelectedHeroID.{:04d}'.format(i)]
             hero_id = current_data.get(hero_id_index)
             
-            hero_data.append({"handle" : hero_ehandle, "hero_id" : hero_id, "name" : HEROES[hero_id]["name"]})
+            kills = current_data.get(rt.by_name['m_iKills.{:04d}'.format(i)])
+            deaths = current_data.get(rt.by_name['m_iDeaths.{:04d}'.format(i)])
+            assists = current_data.get(rt.by_name['m_iAssists.{:04d}'.format(i)])
+
+            lh = current_data.get(rt.by_name['m_iLastHitCount.{:04d}'.format(i)])
+            gold = current_data.get(rt.by_name['EndScoreAndSpectatorStats.m_iTotalEarnedGold.{:04d}'.format(i)])
+            xp = current_data.get(rt.by_name['EndScoreAndSpectatorStats.m_iTotalEarnedXP.{:04d}'.format(i)])
+            
+            hero_data.append({
+                "handle" : hero_ehandle, 
+                "hero_id" : hero_id, 
+                "name" : HEROES[hero_id]["name"],
+                "kills" : kills,
+                "deaths" : deaths,
+                "assists" : assists,
+                "lh" : lh,
+                "gold" : gold,
+                "xp" : xp,
+            })
 
         return hero_data
