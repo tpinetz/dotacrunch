@@ -9,7 +9,7 @@ class ReplayParserTestCase(unittest.TestCase):
 		libdir = path.abspath(path.dirname(__file__))
 		self.testfile = libdir + "/replays/1000394049.dem"
 
-	def test_read_replay_data_heroes(self):
+	def test_read_replay_data_heroes_first_tick(self):
 		"""
 			tick_data contains heroes in right format
 			herodata contains name, x, y

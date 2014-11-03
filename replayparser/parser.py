@@ -5,7 +5,7 @@ from smoke.replay import demo as rply_dm
 
 from const import HEROES
 
-from mapdrawer import MapDrawer
+from drawer import MapDrawer
 
 from copy import deepcopy
 
@@ -49,6 +49,10 @@ class ReplayParser():
         return general_data
 
     def read_replay_data(self):
+        """
+            reads the info of one tick and returns it, use it in a for loop
+        """
+
         timedelta = 0
 
         # general data
@@ -97,6 +101,9 @@ class ReplayParser():
             yield tick_data
 
     def get_hero_info_for_tick(self, entities):
+        """
+            Maps the hero_ids from the replay entities to the respective m_nGameState
+        """
         world_data = entities.by_cls[self.class_info['DT_DOTA_PlayerResource']]
         rt = self.received_tables.by_dt['DT_DOTA_PlayerResource']
         current_data = world_data[0].state
