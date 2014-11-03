@@ -29,15 +29,17 @@ def main():
 	# plotting for puck
 	time, gpm, xpm = zip(*puck_gpm_xpm)
 	plt.subplot(2, 1, 1)
-	plt.plot(time, gpm, color = "#DE0909")	# red
-	plt.plot(time, xpm, color = "#0088FF")	# blue
+	plt.plot(time, gpm, color = "#DE0909", label = "GPM")	# red
+	plt.plot(time, xpm, color = "#0088FF", label = "XPM")	# blue
 	plt.title("Puck GPM & XPM")
 
 	# plotting for viper
 	time, gpm, xpm = zip(*viper_gpm_xpm)
 	plt.subplot(2, 1, 2)
-	plt.plot(time, gpm, color = "#DE0909")	# red
-	plt.plot(time, xpm, color = "#0088FF")	# blue
+	plt.plot(time, gpm, color = "#DE0909", label = "GPM")	# red
+	plt.plot(time, xpm, color = "#0088FF", label = "XPM")	# blue
+	plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
+          fancybox=True, shadow=True, ncol=5)
 	plt.title("Viper GPM & XPM")
 
 	plt.savefig("examples/output/gpm_xpm_graph.png")
