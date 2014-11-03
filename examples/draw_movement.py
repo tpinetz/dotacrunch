@@ -1,17 +1,16 @@
 # adding plugin to path
-from parser import ReplayParser
+from dotacrunch import parser
 from os import path
 
 def main():
 	libdir = path.abspath(path.dirname(__file__))
 	demofile = libdir + "/replays/1000394049.dem"
 
-	replay_parser = ReplayParser(demofile)
+	replay_parser = parser.ReplayParser(demofile)
 	draw_data = {}
 
 	interval = 5 # in seconds
 	i = 0
-	tracked_heroes = ["npc_dota_hero_puck"]
 
 	for tick in replay_parser.read_replay_data():
 
@@ -33,6 +32,10 @@ def main():
 	drawer = replay_parser.get_mapdrawer()
 	drawer.draw_circle_world_coordinates_list(draw_data["npc_dota_hero_puck"], color = "blue")
 	drawer.save(libdir + "/output/puck_movement.png")
+
+	drawer = replay_parser.get_mapdrawer()
+	drawer.draw_circle_world_coordinates_list(draw_data["npc_dota_hero_viper"], color = "blue")
+	drawer.save(libdir + "/output/viper_movement.png")
 
 if __name__ == "__main__":
 	main()

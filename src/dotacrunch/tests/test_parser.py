@@ -1,6 +1,6 @@
 import unittest
 from parser import ReplayParser
-from mapdrawer import MapDrawer
+from drawer import MapDrawer
 from os import path
 
 class ReplayParserTestCase(unittest.TestCase):
