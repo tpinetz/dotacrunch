@@ -10,11 +10,14 @@ class MapDrawer:
 
     """
     def __init__(self, towers, received_tables):
+        """
+            @param towers: table containing info about towers
+            @param received_tables: the received_tables from the replay
+        """
         self.coordinates = []
         libdir = path.abspath(path.dirname(__file__))
         self.image = Image.open(libdir + "/assets/dota2map.png")
         self.draw = ImageDraw.Draw(self.image)
-
         self.map_w, self.map_h = self.image.size
 
         # init information tables and respective columns
@@ -101,7 +104,6 @@ class MapDrawer:
         """
             saves the map
         """
-        del self.draw
         scaled = self.image.resize((self.map_w / scale, self.map_h / scale), Image.ANTIALIAS)
         scaled.save(filename)     
 

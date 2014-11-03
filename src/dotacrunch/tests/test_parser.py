@@ -12,7 +12,7 @@ class ReplayParserTestCase(unittest.TestCase):
 	def test_read_replay_data_heroes_first_tick(self):
 		"""
 			tick_data contains heroes in right format
-			herodata contains name, x, y
+			herodata contains name, x, y and they have the right type
 		"""
 
 		replay_parser = ReplayParser(self.testfile)
@@ -24,10 +24,18 @@ class ReplayParserTestCase(unittest.TestCase):
 
 			for hero in herodata:
 				self.assertTrue("name" in hero)
+				self.assertIsInstance(hero["name"], str)
+
 				self.assertTrue("worldX" in hero)
+				self.assertIsInstance(hero["worldX"], float)
+
 				self.assertTrue("worldY" in hero)
+				self.assertIsInstance(hero["worldY"], float)
 
 			break
+
+	def test_read_general_data(self):
+		replay_parser = ReplayParser(self.testfile)
 
 	def test_get_mapdrawer_should_fail(self):
 		"""
