@@ -71,13 +71,11 @@ class ReplayParser():
 
         # general data
         for tick in self.demo.play():
-            tick_data = {
-                "heroes" : {}
-            }
-
             # getting infos about tick
             game_meta = tick.entities.by_cls[self.class_info['DT_DOTAGamerulesProxy']][0].state
             current_game_status = game_meta.get(self.game_status_index)
+            world_data = tick.entities.by_cls[self.class_info['DT_DOTA_PlayerResource']]
+            current_data = world_data[0].state
 
             # only count data after game has started
             if current_game_status < 5:
@@ -87,16 +85,27 @@ class ReplayParser():
             time = game_meta.get(self.game_meta_tables.by_name['dota_gamerules_data.m_fGameTime'])
             if timedelta is 0:
                 timedelta = time
-            time = time - timedelta # minutes = round((time / 60) * 10) / 10
-            tick_data["time"] = time
+            time = time - timedelta
+            minutes = round((time / 60) * 10) / 10       
 
             if time < i * interval:
                 continue
             i = i + 1
 
+            # Starting to collect data here
+            tick_data = {
+                "heroes" : {}
+            }
+            tick_data["time"] = time
+
             # heroes
             hero_list = self.get_hero_info_for_tick(tick.entities)
-            for hero_id, name, handle in hero_list:
+
+            # reading coords
+            for hero in hero_list:
+                name = hero["name"]
+                handle = hero["handle"]
+
                 hero_data = tick.entities.by_ehandle[handle].state
 
                 position_x_index = self.npc_info_table.by_name['m_cellX']
@@ -110,7 +119,7 @@ class ReplayParser():
                     "name" : name,
                     "worldX" : worldX,
                     "worldY" : worldY,
-                    "hero_id" : hero_id
+                    "hero_id" : hero["hero_id"]
                 }
 
             yield tick_data
@@ -132,6 +141,6 @@ class ReplayParser():
             hero_id_index = rt.by_name['m_nSelectedHeroID.{:04d}'.format(i)]
             hero_id = current_data.get(hero_id_index)
             
-            hero_data.append((hero_id, HEROES[hero_id]["name"], hero_ehandle))
+            hero_data.append({"handle" : hero_ehandle, "hero_id" : hero_id, "name" : HEROES[hero_id]["name"]})
 
         return hero_data

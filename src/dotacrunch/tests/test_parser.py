@@ -22,28 +22,41 @@ class ReplayParserTestCase(unittest.TestCase):
 			herodata = tick["heroes"]
 			self.assertTrue(len(herodata) is 10)
 
-			for hero in herodata:
-				self.assertTrue("name" in hero)
-				self.assertIsInstance(hero["name"], str)
+			for heroname, data in herodata.iteritems():
+				self.assertTrue(heroname)
 
-				self.assertTrue("worldX" in hero)
-				self.assertIsInstance(hero["worldX"], float)
+				self.assertTrue("name" in data)
+				self.assertIsInstance(data["name"], str)
 
-				self.assertTrue("worldY" in hero)
-				self.assertIsInstance(hero["worldY"], float)
+				self.assertTrue("worldX" in data)
+				self.assertIsInstance(data["worldX"], float)
+
+				self.assertTrue("worldY" in data)
+				self.assertIsInstance(data["worldY"], float)
 
 			break
 
+	def test_read_replay_data_interval(self, interval=3):
+		replay_parser = ReplayParser(self.testfile)
+
+		prev = -1
+		cur = -1
+
+		for tick in replay_parser.read_replay_data(interval = interval):
+			prev = cur
+			cur = tick["time"]
+
+			if prev is not -1:
+				self.assertTrue(round(cur) - round(prev) == interval)
+
+			if cur > 60:
+				break
+
 	def test_read_general_data(self):
 		replay_parser = ReplayParser(self.testfile)
+		general_data = replay_parser.read_general_data()
 
-	def test_get_mapdrawer_should_fail(self):
-		"""
-			cant get mapdrawer before iterating
-		"""
-		replay_parser = ReplayParser(self.testfile)
-
-		self.assertRaises(Exception, replay_parser.get_mapdrawer)
+		self.assertTrue("file" in general_data)
 
 	def test_get_mapdrawer_should_succeed(self):
 		"""
