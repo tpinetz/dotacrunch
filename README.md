@@ -36,7 +36,7 @@ If you want to know how the library works, you can check out the tests. To run t
 
 `$ python -m unittest discover tests`
 
-Screenshots
+Examples
 ------------
 Movement of a player read every 5 seconds and plotted with the included mapdrawer.
 
