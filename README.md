@@ -36,6 +36,17 @@ If you want to know how the library works, you can check out the tests. To run t
 
 `$ python -m unittest discover tests`
 
+Screenshots
+------------
+Movement of a player read every 5 seconds and plotted with the included mapdrawer.
+
+![movement plot](https://raw.githubusercontent.com/lawli3t/dotacrunch/master/examples/output/puck_movement.png "Output")
+
+
+Plotting data fetched via the parser.
+
+![movement plot](https://raw.githubusercontent.com/lawli3t/dotacrunch/master/examples/output/gpm_xpm_graph.png "Output")
+
 Credits
 -------
 
